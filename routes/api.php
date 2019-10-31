@@ -19,6 +19,7 @@ use Illuminate\Http\Request;
 
 // Route::post('email/subscribe', 'EmailListController@create');
 // Route::get('email/get-all', 'EmailListController@show');
+
 Route::prefix('auth')->group(function () {
 	Route::post('signup', 'SignUpController@signUp');
 	Route::post('login', 'LoginController@auth');
@@ -94,6 +95,7 @@ Route::group(['middleware' => 'auth:api'], function() {
 	    Route::post('bulk/update', 'ListingAmenitiesController@bulk_update');
 	    Route::get('/{user_id}', 'ListingAmenitiesController@show');
 	});
+
 	Route::prefix('blog-category')->group(function () {
 	    Route::post('create', 'BlogCategoryController@create');
 	    Route::post('/update', 'BlogCategoryController@update');
