@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Symfony\Component\HttpKernel\Exception\HttpException;
 // use Tymon\JWTAuth\JWTAuth;
 use App\Http\Controllers\Controller;
@@ -9,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\User;
 use App\State;
-
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use App\Jobs\EmailVerificationJob;
 use App\Jobs\ResetPassWordTokenJob;
@@ -17,7 +14,6 @@ use App\Jobs\PasswordChangedJob;
 use Auth, DB, Redirect, Hash;
 use Carbon\Carbon;
 use DateTime;
-
 class UserController extends Controller
 {
     /**
@@ -29,7 +25,6 @@ class UserController extends Controller
     {
         // $this->middleware('jwt.auth', ["except" => ['create','resend_activation_link', 'send_reset_password_token', 'reset_password_with_token', 'activate_email_account']]);
     }
-
     
   
     /**
@@ -41,7 +36,6 @@ class UserController extends Controller
     {
         return response()->json($request->user());
     }
-
     /**
      * Get the authenticated User
      *
@@ -53,7 +47,6 @@ class UserController extends Controller
         $user['state'] = State::where('id', $user->state_id)->select('id', 'state')->first();
         return response()->json($user);
     }
-
     /**
      * create a new specified resource
      * step one validation
@@ -70,10 +63,8 @@ class UserController extends Controller
             "role" => "required",
             "password" => "required"
         ]);
-
         return $store = self::store($data);
     }
-
     /**
      * save a new specified resource
      * @param Request
@@ -101,7 +92,6 @@ class UserController extends Controller
         }
         
     }
-
     /**
      * check if email resource exist.
      *
@@ -120,7 +110,6 @@ class UserController extends Controller
             return $e->getMessage();
         }
     }
-
     /**
      * get user email verified status
      *
@@ -138,7 +127,6 @@ class UserController extends Controller
             return $e->getMessage();
         }
     }
-
     /**
      * get user email verified status
      *
@@ -201,7 +189,6 @@ class UserController extends Controller
         }
     }
     
-
     /**
      * get user email verified status
      *
@@ -234,7 +221,6 @@ class UserController extends Controller
             return $e->getMessage();
         }
     }
-
     public static function reset_password_with_token(Request $request)
     {
         // $validatedData = $request->validate([
@@ -251,7 +237,6 @@ class UserController extends Controller
             }
             //compare provided ton with hash token
             $reset_data = DB::table('password_resets')->where('email', $data['email'])->orderBy('created_at', 'desc')->first();
-
             if($reset_data->token == $data['token'])
             {
                 $user = User::where('email', $data['email'])->first();
@@ -300,7 +285,6 @@ class UserController extends Controller
             return $e->getMessage();
         }
     }
-
     /**
      * update a new specified resource
      * @param Request
@@ -389,12 +373,15 @@ class UserController extends Controller
                 $user->marital_status = $data['marital_status'];
             }
             $user->save();
-                return response()->json(['status' => 'ok','data'=> $user, 'msg'=>'Profile Updated successfully']);
+                return response()->json([
+                    'status' => 'ok',
+                    'data'=> $user, 
+                    'msg'=>'Profile Updated successfully'
+                ]);
         } catch(Exception $e){
             return $e->getMessage();
         }
     }
-
     /**
      * upload user image/avata
      *
@@ -409,7 +396,6 @@ class UserController extends Controller
                 'avatar' => 'required|image|mimes:jpeg,png,jpg,svg|max:2048',
                 'user_id' => 'required',
             ]);
-
             if ($request->hasFile('avatar')) {
                 
                 /*$image = $request->file('avatar');
@@ -436,7 +422,6 @@ class UserController extends Controller
             return $e->getMessage();
         }
     }
-
     /**
      * delete user image/avata
      *
