@@ -1,5 +1,7 @@
 <?php
+
 use Illuminate\Http\Request;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -10,11 +12,14 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
+
 // Route::post('email/subscribe', 'EmailListController@create');
 // Route::get('email/get-all', 'EmailListController@show');
+
 Route::prefix('auth')->group(function () {
 	Route::post('signup', 'SignUpController@signUp');
 	Route::post('login', 'LoginController@auth');
@@ -24,6 +29,13 @@ Route::prefix('auth')->group(function () {
 	Route::get('verifyemail/{token}', 'UserController@activate_email_account');
 	Route::post('reset-password', 'UserController@reset_password_with_token');
 });
+
+
+
+
+
+
+
 Route::group(['middleware' => 'auth:api'], function() {
 	Route::prefix('user')->group(function () {
 	    Route::post('update', 'UserController@update');
@@ -38,6 +50,7 @@ Route::group(['middleware' => 'auth:api'], function() {
         Route::get('/locals/{state_id}', 'LocalGovtController@state_locals');
         Route::get('/cities/{state_id}', 'CityController@state_cities');
     });
+
     Route::prefix('amenities')->group(function () {
         Route::post('create', 'AmenitiesController@create');
         Route::post('update', 'AmenitiesController@update');
@@ -54,6 +67,7 @@ Route::group(['middleware' => 'auth:api'], function() {
         Route::get('/{user_id}', 'UserPreferenceController@show');
         Route::get('/delete/{user_id}', 'UserPreferenceController@destroy');
     });
+
     Route::prefix('listing-categories')->group(function () {
 	    Route::post('create', 'ListingCategoryController@create');
 	    Route::post('update/{id}', 'ListingCategoryController@update');
@@ -74,11 +88,14 @@ Route::group(['middleware' => 'auth:api'], function() {
 	    Route::post('upload', 'ListingImageController@create');
 	    Route::get('delete/{resource_id}', 'ListingImageController@destroy');
 	});
+
+
 	
 	Route::prefix('listing-amenities')->group(function () {
 	    Route::post('bulk/update', 'ListingAmenitiesController@bulk_update');
 	    Route::get('/{user_id}', 'ListingAmenitiesController@show');
 	});
+
 	Route::prefix('blog-category')->group(function () {
 	    Route::post('create', 'BlogCategoryController@create');
 	    Route::post('/update', 'BlogCategoryController@update');
@@ -86,6 +103,7 @@ Route::group(['middleware' => 'auth:api'], function() {
 	    Route::get('/{resource_id}', 'BlogCategoryController@show');
 	    Route::get('/delete/{resource_id}', 'BlogCategoryController@destroy');
 	});
+
 	Route::prefix('blog')->group(function () {
 	    Route::post('create', 'BlogController@create');
 	    Route::post('/update', 'BlogController@update');
@@ -93,6 +111,7 @@ Route::group(['middleware' => 'auth:api'], function() {
 	    Route::get('/{resource_id}', 'BlogController@show');
 	    Route::get('/delete/{resource_id}', 'BlogController@destroy');
 	});
+
 	Route::prefix('listing-favorites')->group(function () {
 	    Route::post('create', 'ListingFavoriteController@create');
 	    Route::post('delete', 'ListingFavoriteController@destroy');
