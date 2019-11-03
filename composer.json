@@ -63,15 +63,10 @@
             "@php artisan key:generate --ansi"
         ],
         "post-install-cmd": [
-            "php artisan config:clear",
-            "php artisan cache:clear",
-            "php artisan config:cache",
             "php artisan clear-compiled",
             "php artisan optimize",
             "chmod -R 777 storage",
-            "chmod -R 775 storage",
-            "php artisan migrate:fresh --seed",
-            "php artisan passport:install --force"
+            "chmod -R 775 storage"
         ]
     }
 }
