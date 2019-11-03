@@ -13,9 +13,9 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 Route::post('email/subscribe', 'EmailListController@create');
 Route::get('email/get-all', 'EmailListController@show');
@@ -33,10 +33,14 @@ Route::prefix('auth')->group(function () {
 
 
 Route::group(['middleware' => 'auth:api'], function() {
+
+
+
 	Route::prefix('user')->group(function () {
 	    Route::post('update', 'UserController@update');
 	    Route::post('avata', 'UserController@upload_user_image');
 		Route::get('me', 'UserController@me');
+		Route::get('user', 'UserController@user');
 	});
 	
     Route::prefix('states')->group(function () {
