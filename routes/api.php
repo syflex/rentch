@@ -13,12 +13,12 @@ use Illuminate\Http\Request;
 |
 */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return $request->user();
+});
 
-// Route::post('email/subscribe', 'EmailListController@create');
-// Route::get('email/get-all', 'EmailListController@show');
+Route::post('email/subscribe', 'EmailListController@create');
+Route::get('email/get-all', 'EmailListController@show');
 
 Route::prefix('auth')->group(function () {
 	Route::post('signup', 'SignUpController@signUp');
@@ -29,10 +29,6 @@ Route::prefix('auth')->group(function () {
 	Route::get('verifyemail/{token}', 'UserController@activate_email_account');
 	Route::post('reset-password', 'UserController@reset_password_with_token');
 });
-
-
-
-
 
 
 
