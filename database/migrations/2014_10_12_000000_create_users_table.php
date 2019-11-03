@@ -19,14 +19,12 @@ class CreateUsersTable extends Migration
             $table->bigInteger('local_govt_id')->nullable();
             $table->bigInteger('city_id')->nullable();
             $table->enum('role', ['superadmin', 'admin', 'agent', 'tenant'])->default('tenant');
-            $table->string('name');
-            // $table->string('middle_name')->nullable();
-            // $table->string('last_name');
-            $table->string('phone_number')->nullable();
-            $table->string('avatar')->nullable();
-            $table->string('monthly_budget')->nullable();
+            $table->string('name');            
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('phone_number')->nullable();
+            $table->string('avatar')->nullable();
+            $table->string('monthly_budget')->default('0');
             $table->text('current_address')->nullable();
             $table->enum('marital_status', ['Single', 'Married', 'Divorced', 'others'])->default('others');
             $table->enum('gender', ['Male', 'Female', 'others'])->default('others');
